@@ -33,10 +33,10 @@
 - Публикует сообщение в Kafka (topic `c.out`)
 
 ### Kafka Topics
-| Topic    | Publisher   | Consumer         |
-|----------|-------------|------------------|
-| ui.in    | UI          | Service A        |
-| c.out    | Service C   | UI (для просмотра)|
+| Topic | Publisher   | Consumer         |
+|-------|-------------|------------------|
+| in    | UI          | Service A        |
+| out   | Service C   | UI(для просмотра)|
 
 ### Инструкция по запуску
 1. Установить Docker и Docker Compose
@@ -45,10 +45,12 @@
 docker-compose up --build
 ```
 3. Адрес Kafka UI: http://localhost:8080
-4. Отправить тестовое сообщение в Kafka через Kafka UI (`ui.in`)
-5. Проверить обработку сообщений через Kafka UI (`c.out`) и базы данных
+4. Отправить тестовое сообщение в Kafka через Kafka UI (`in`)
+5. Проверить обработку сообщений через Kafka UI (`out`) и базы данных
 
-### Состав проекта
-- `docker-compose.yml` — инфраструктура (Kafka, базы, UI)
-- `service-a/`, `service-b/`, `service-c/` — код микросервисов
-- `Dockerfile` в каждом сервисе
+### Рекомендации по реализации и запуску
+- `docker-compose.yml` — инфраструктура (Kafka, базы, UI), в нем же расположены енвы,
+  которые можно затянуть в приложение через application.yaml
+- `.service_a`, `.service_b`, `.service_c` — код микросервисов, создай их в основной папке, что бы не пришлось менять docker-compose
+- Каждый модуль создавай через gradle с версией jdk 21
+- `Dockerfile` скопируй в каждый сервис
