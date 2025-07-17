@@ -18,7 +18,7 @@
 
 ### Микросервисы
 #### Service A
-- Слушает Kafka topic `ui.in`
+- Слушает Kafka topic `in`
 - Сохраняет сообщение в MongoDB
 - Вызывает REST API Service B (`POST /api/process`)
 
@@ -30,7 +30,7 @@
 #### Service C
 - Принимает REST-запросы от Service B
 - Сохраняет сообщение в PostgreSQL
-- Публикует сообщение в Kafka (topic `c.out`)
+- Публикует сообщение в Kafka по разным ключам в topic `out`
 
 ### Kafka Topics
 | Topic | Publisher   | Consumer         |
@@ -52,5 +52,3 @@ docker-compose up --build
 - `docker-compose.yml` — инфраструктура (Kafka, базы, UI), в нем же расположены енвы,
   которые можно затянуть в приложение через application.yaml
 - `.service_a`, `.service_b`, `.service_c` — код микросервисов, создай их в основной папке, что бы не пришлось менять docker-compose
-- Каждый модуль создавай через gradle с версией jdk 21
-- `Dockerfile` скопируй в каждый сервис
