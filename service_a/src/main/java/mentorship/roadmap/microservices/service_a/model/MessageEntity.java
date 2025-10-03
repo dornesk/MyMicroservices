@@ -1,6 +1,7 @@
 package mentorship.roadmap.microservices.service_a.model;
 
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,9 +18,9 @@ public class MessageEntity {
     @Id
     private int id;
 
-    @NonNull
+    @NotNull
     private MessageType type;
 
-    @NonNull
+    @NotNull
     private String content;
 }
