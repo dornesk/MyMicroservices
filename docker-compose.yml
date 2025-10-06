@@ -1,7 +1,8 @@
 services:
 
   kafka:
-    image: bitnami/kafka:latest
+    image: bitnamicharts/kafka:25.3.0
+
     environment:
       - KAFKA_CFG_NODE_ID=0
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
@@ -10,9 +11,12 @@ services:
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
       - KAFKA_KRAFT_CLUSTER_ID=mk-1
-      - KAFKA_CFG_LOG_DIRS=/bitnami/kafka/data
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
     ports:
       - "9092:9092"
+    volumes:
+      - kafka_data:/bitnami/kafka
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
@@ -26,11 +30,15 @@ services:
     image: mongo:latest
     ports:
       - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
 
   redis:
     image: redis:latest
     ports:
       - "6379:6379"
+    volumes:
+      - redis_data:/data
 
   postgres:
     image: postgres:latest
@@ -40,6 +48,8 @@ services:
       POSTGRES_DB: service_c_db
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
   service-a:
     build: ./service_a
@@ -47,13 +57,8 @@ services:
       - kafka
       - mongo
     environment:
-      # MongoDB
       MONGODB_URI: mongodb://mongo:27017/service-a-db
-
-      # Kafka
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
-
-      # URLs до других сервисов
       SERVICE_B_URL: http://service-b:8080
     ports:
       - "8081:8080"
@@ -63,11 +68,8 @@ services:
     depends_on:
       - redis
     environment:
-      # Redis
       REDIS_HOST: redis
       REDIS_PORT: 6379
-
-      # URLs до других сервисов
       SERVICE_C_URL: http://service-c:8080
     ports:
       - "8082:8080"
@@ -78,12 +80,15 @@ services:
       - postgres
       - kafka
     environment:
-      # PostgreSQL
       DATASOURCE_URL: jdbc:postgresql://postgres:5432/service_c_db
       DATASOURCE_USERNAME: user
       DATASOURCE_PASSWORD: password
-
-      # Kafka
       KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     ports:
       - "8083:8080"
+
+volumes:
+  kafka_data:
+  mongo_data:
+  redis_data:
+  postgres_data:
