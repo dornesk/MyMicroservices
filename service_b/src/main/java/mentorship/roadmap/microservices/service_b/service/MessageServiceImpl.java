@@ -7,6 +7,7 @@ import mentorship.roadmap.microservices.service_b.model.MessageCache;
 import mentorship.roadmap.microservices.service_b.model.MessageType;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -14,6 +15,7 @@ import java.time.Duration;
 
 @Slf4j
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class MessageServiceImpl implements MessageService {
 
