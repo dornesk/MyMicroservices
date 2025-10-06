@@ -1,26 +1,25 @@
 package mentorship.roadmap.microservices.service_a.model;
 
-
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.annotation.Id;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "messages")
 public class MessageEntity {
 
     @Id
-    private int id;
+    private String id;
 
-    @NotNull
+    @Enumerated(EnumType.STRING)
     private MessageType type;
 
-    @NotNull
     private String content;
 }
