@@ -1,6 +1,6 @@
 package mentorship.roadmap.microservices.service_a.model;
 
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +18,6 @@ public class MessageEntity {
     @Id
     private String id;
 
-    @Enumerated(EnumType.STRING)
     private MessageType type;
 
     private String content;

@@ -1,8 +1,7 @@
 services:
 
   kafka:
-    image: bitnamicharts/kafka:25.3.0
-
+    image: bitnamilegacy/kafka:4.0.0-debian-12-r10
     environment:
       - KAFKA_CFG_NODE_ID=0
       - KAFKA_CFG_PROCESS_ROLES=broker,controller
@@ -11,12 +10,9 @@ services:
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
       - KAFKA_KRAFT_CLUSTER_ID=mk-1
-      - ALLOW_PLAINTEXT_LISTENER=yes
-      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_CFG_LOG_DIRS=/bitnami/kafka/data
     ports:
       - "9092:9092"
-    volumes:
-      - kafka_data:/bitnami/kafka
 
   kafka-ui:
     image: provectuslabs/kafka-ui:latest
