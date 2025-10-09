@@ -9,6 +9,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 @Slf4j
 @Service
 @Transactional
@@ -25,10 +26,18 @@ public class MessageServiceImpl implements MessageService {
     public void saveAndPublish(MessageDTO dto) {
         log.info("Saving message with id {}", dto.getId());
         MessageEntity entity = mapper.toEntity(dto);
+        log.info("Mapped entity id: {}", entity.getId());
+        if (entity.getId() == null) {
+            throw new IllegalArgumentException("ID is null after mapping! Check DTO and Mapper.");
+        }
         repository.save(entity);
-        log.info("Message saved in DB: {}", entity);
+        log.info("Message saved in DB: {}", entity.getId());
 
-        kafkaTemplate.send(TOPIC_OUT, dto.getContent());
-        log.info("Message published to Kafka topic {}", TOPIC_OUT);
+        kafkaTemplate.send(TOPIC_OUT, dto.getContent())
+                .thenAccept(result -> log.info("Published message to Kafka topic {}: {}", TOPIC_OUT, result.getProducerRecord().value()))
+                .exceptionally(ex -> {
+                    log.error("Failed to publish message to Kafka", ex);
+                    return null;
+                });
     }
 }

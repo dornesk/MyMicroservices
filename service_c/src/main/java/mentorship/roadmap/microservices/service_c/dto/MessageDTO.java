@@ -10,6 +10,8 @@ import mentorship.roadmap.microservices.service_c.model.MessageType;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageDTO {
+
+    @NotNull
     private String id;
 
     @NotNull(message = "Type cannot be null")

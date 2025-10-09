@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MessageCache {
+public class MessageEntity {
     private String id;
 
     private MessageType type;

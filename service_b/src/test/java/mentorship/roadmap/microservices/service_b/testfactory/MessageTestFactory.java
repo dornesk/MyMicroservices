@@ -1,7 +1,7 @@
 package mentorship.roadmap.microservices.service_b.testfactory;
 
 import mentorship.roadmap.microservices.service_b.dto.MessageDTO;
-import mentorship.roadmap.microservices.service_b.model.MessageCache;
+import mentorship.roadmap.microservices.service_b.model.MessageEntity;
 import mentorship.roadmap.microservices.service_b.model.MessageType;
 
 public class MessageTestFactory {
@@ -13,9 +13,9 @@ public class MessageTestFactory {
                 .build();
     }
 
-    public static MessageCache createDefaultMessageCache() {
+    public static MessageEntity createDefaultMessageCache() {
         MessageDTO dto = createDefaultMessageDTO();
-        return MessageCache.builder()
+        return MessageEntity.builder()
                 .id(dto.getId())
                 .type(dto.getType())
                 .content(dto.getContent())

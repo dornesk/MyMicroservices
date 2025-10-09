@@ -1,7 +1,7 @@
 package mentorship.roadmap.microservices.service_b.service;
 
 import mentorship.roadmap.microservices.service_b.dto.MessageDTO;
-import mentorship.roadmap.microservices.service_b.model.MessageCache;
+import mentorship.roadmap.microservices.service_b.model.MessageEntity;
 import mentorship.roadmap.microservices.service_b.testfactory.MessageTestFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -63,17 +63,17 @@ class MessageServiceImplTest {
 
     @Test
     @DisplayName("Преобразование DTO в Entity и сохранение в Redis")
-    void testCacheMessage() {
+    void testEntityMessage() {
         MessageDTO dto = MessageTestFactory.createDefaultMessageDTO();
-        MessageCache cacheEntity = MessageTestFactory.createDefaultMessageCache();
+        MessageEntity entity = MessageTestFactory.createDefaultMessageCache();
         dto.setType(mentorship.roadmap.microservices.service_b.model.MessageType.IMPORTANT);
 
-        when(mapper.toEntity(dto)).thenReturn(cacheEntity);
+        when(mapper.toEntity(dto)).thenReturn(entity);
 
         service.processMessage(dto);
 
         verify(mapper).toEntity(dto);
-        verify(valueOperations).set(anyString(), eq(cacheEntity), any());
+        verify(valueOperations).set(anyString(), eq(entity), any());
     }
 
     @Test

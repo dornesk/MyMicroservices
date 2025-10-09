@@ -12,7 +12,6 @@ import lombok.*;
 public class MessageEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private String id;
 
     @Enumerated(EnumType.STRING)
