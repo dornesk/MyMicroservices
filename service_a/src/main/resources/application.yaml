@@ -14,14 +14,10 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}
     consumer:
+      auto-offset-reset: earliest
+      group-id: service-a
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-          spring.json.trusted.packages: "*"
-#      auto-offset-reset: earliest
-#      group-id: service-a
-#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-#      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 logging:
   level:
@@ -30,4 +26,4 @@ logging:
     org.springframework.web: WARN
 
 service-b:
-  uri: ${SERVICE_B_URL}
+  uri: ${SERVICE_B_URL:http://service-b:8080}

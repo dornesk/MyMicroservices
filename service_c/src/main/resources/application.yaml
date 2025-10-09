@@ -12,7 +12,14 @@ spring:
     password: ${DATASOURCE_PASSWORD}
     username: ${DATASOURCE_USERNAME}
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+logging:
+  level:
+    root: INFO
+    mentorship.roadmap.microservices.service_a: DEBUG
+    org.springframework.web: WARN

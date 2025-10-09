@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class MessageCache {
-    private int id;
+    private String id;
 
     private MessageType type;
 

@@ -13,7 +13,7 @@ public class MessageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    private String id;
 
     @Enumerated(EnumType.STRING)
     private MessageType type;

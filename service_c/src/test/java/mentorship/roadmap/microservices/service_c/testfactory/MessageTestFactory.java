@@ -8,7 +8,7 @@ public class MessageTestFactory {
 
     public static MessageDTO createDefaultMessageDTO() {
         return MessageDTO.builder()
-                .id(1)
+                .id("1")
                 .type(MessageType.NORMAL)
                 .content("Default test message")
                 .build();

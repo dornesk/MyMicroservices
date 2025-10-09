@@ -19,7 +19,7 @@ public class MessageServiceImpl implements MessageService {
     private final WebClient webClient;
     private final MessageMapper mapper;
 
-    private static final String SERVICE_B_URL = "http://service_b/api/process";
+    //private static final String SERVICE_B_URL = "http://service_b/api/process";
 
     @Override
     public void saveMessage(MessageDTO dto) {
@@ -33,7 +33,7 @@ public class MessageServiceImpl implements MessageService {
     public void sendtoServiceB(MessageDTO dto) {
         log.info("Sending message to Service B with id {}", dto.getId());
         webClient.post()
-                .uri(SERVICE_B_URL)
+                .uri("/api/process")
                 .body(BodyInserters.fromValue(dto))
                 .retrieve()
                 .bodyToMono(Void.class)

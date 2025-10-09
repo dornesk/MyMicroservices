@@ -13,5 +13,11 @@ spring:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
 
+logging:
+  level:
+    root: INFO
+    mentorship.roadmap.microservices.service_a: DEBUG
+    org.springframework.web: WARN
+
 service-c:
   uri: ${SERVICE_C_URL}
