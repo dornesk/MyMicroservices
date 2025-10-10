@@ -19,7 +19,7 @@ public class MessageServiceImpl implements MessageService {
     private static final String TOPIC_OUT = "out";
 
     private final MessageRepository repository;
-    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final KafkaTemplate<String, MessageDTO> kafkaTemplate;
     private final MessageMapper mapper;
 
     @Override
@@ -34,8 +34,10 @@ public class MessageServiceImpl implements MessageService {
         repository.save(entity);
         log.info("Message saved in DB: {}", entity.getId());
 
-        kafkaTemplate.send(TOPIC_OUT, dto.getContent())
-                .thenAccept(result -> log.info("Published message to Kafka topic {}: {}", TOPIC_OUT, result.getProducerRecord().value()))
+        kafkaTemplate.send(TOPIC_OUT, dto)
+                .thenAccept(
+                        result -> log.info("Published message to Kafka topic {}: {}",
+                                TOPIC_OUT, result.getProducerRecord().value()))
                 .exceptionally(ex -> {
                     log.error("Failed to publish message to Kafka", ex);
                     return null;
