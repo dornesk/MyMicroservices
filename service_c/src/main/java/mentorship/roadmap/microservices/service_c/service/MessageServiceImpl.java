@@ -27,6 +27,7 @@ public class MessageServiceImpl implements MessageService {
         log.info("Saving message with id {}", dto.getId());
         MessageEntity entity = mapper.toEntity(dto);
         log.info("Mapped entity id: {}", entity.getId());
+
         if (entity.getId() == null) {
             throw new IllegalArgumentException("ID is null after mapping! Check DTO and Mapper.");
         }
